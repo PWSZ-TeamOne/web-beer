@@ -1,31 +1,93 @@
 <template>
-    <section>
-        <navigation></navigation>
-        <h5 class="center-align">Login</h5>
-        <section id="firebaseui-auth-container"></section>
-    </section>
+  <div>
+    <flash-message
+      transitionIn="animated swing"
+      class="alert-box"
+    ></flash-message>
+    <div class="d-flex align-items-center login-box">
+      <div class="m-auto">
+        <h2>{{ this.text }}</h2>
+        <p class="text-danger">{{ this.info }}</p>
+        <br />
+        <div class="md-form mb-5 text-left">
+          <i class="fas fa-user prefix grey-text"></i>
+          <label for="nickname">Email</label>
+          <input
+            type="email"
+            ref="email"
+            id="email"
+            class="form-control"
+            v-model="email"
+            required
+          />
+        </div>
+        <div class="md-form mb-5 text-left">
+          <i class="fas fa-user prefix grey-text"></i>
+          <label for="nickname">Hasło</label>
+          <input
+            type="password"
+            ref="password"
+            id="password"
+            class="form-control"
+            v-model="password"
+            required
+          />
+        </div>
+        <button @click="login" id="login" class="btn-lg">Zaloguj</button>
+        <br />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-import firebase from 'firebase';
-import * as firebaseui from 'firebaseui';
-import 'firebaseui/dist/firebaseui.css';
+import firebase from "firebase";
+import store from "../store";
+import alert from "../mixins/alert";
 export default {
-    name: "Login",
-    data() {
-        return {};
+  name: "Login",
+  mixins: [alert],
+  data() {
+    return {
+      text: "Logowanie",
+      password: null,
+      email: null,
+    };
+  },
+  methods: {
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(async (result) => {
+          let user = result.user;
+          if (user) {
+            firebase
+              .firestore()
+              .collection("users")
+              .where("userId", "==", user.uid)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach(function (doc) {
+                  const userData = doc.data();
+                  store.dispatch("setSession", userData);
+                });
+                this.alert("Logowanie prawidłowe!", "success");
+                console.log("zalogowano");
+                this.$router.push("/meetings").catch(()=>{});;
+              });
+          }
+        })
+        .catch(() => {
+          this.alert("Logowanie nie prawidłowe, złe dane!", "error");
+        });
     },
-    mounted() {
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        var uiConfig = {
-            signInSuccessUrl: "/profile",
-            signInOptions: [firebase.auth.FacebookAuthProvider.PROVIDER_ID]
-        };
-        ui.start("#firebaseui-auth-container", uiConfig);
-    }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.login-box {
+  height: 100vh;
+}
 </style>

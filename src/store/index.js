@@ -1,29 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     user: {
       userId: null,
       email: null,
-      role: null
+      firstName: null,
+      lastName: null,
     },
+    logged:null
   },
   getters: {
-    getUser: state => state.user,
-    getPeerUser: state => state.currentPeerUser,
-    getPeerUserNickanme: state => state.currentPeerUserNickname,
-    getChatId: state => state.chatId,
+    getUser: state => state.admin,
   },
   mutations: {
     storeUser(state, data) {
-      state.user = data
+      state.user = data;
+      state.logged = true;
     },
     logoutUser(state, data) {
-      state.notification = data;
-      state.user = data;
+      state.admin = data;
+      state.logged = null;
     },
   },
   actions: {

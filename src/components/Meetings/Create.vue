@@ -1,0 +1,120 @@
+<template>
+  <v-form>
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          md="4"
+        >
+        {{photo}}
+          <v-file-input
+            v-model="file"
+            @change="storePhoto($event);"
+            required
+          ></v-file-input>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="name"
+            label="Name"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="address"
+            label="Address"
+            required
+          ></v-text-field>
+        </v-col>
+        {{id}}
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-date-picker
+            locale="en-in"
+            :min="moment(new Date()).format('YYYY-MM-DD')"
+            v-model="date"
+            no-title
+          ></v-date-picker>
+        </v-col>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-time-picker
+          v-model="time"
+          format="24hr"
+         ></v-time-picker>
+        </v-col>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-btn
+            elevation="2"
+            @click="store"
+            outlined
+          >Save</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-form>
+</template>
+<script>
+import store from "@/store";
+import storePhoto from "@/mixins/storePhoto";
+import md5 from 'js-md5'
+import firebase from "firebase";
+
+export default {
+  name: "MeetingsCreate",
+  mixins: [storePhoto],
+  data() {
+    return {
+      name: null,
+      address: null,
+      date: null,
+      time: null,
+      file: null,
+      photo: null,
+      minDate: "",
+      id: null,
+      randomCode:null
+    };
+  },
+  methods: {
+    store(){
+      this.id = md5(new Date() + '|' + this.name + '|' + this.$store.state.user.userId).toString();
+      this.randomCode = Math.floor(Math.random() * 99999999 + 10000000).toString();
+      firebase
+          .firestore()
+            .collection("events")
+            .doc(this.id)
+            .set({
+              active: true,
+              userId: this.$store.state.user.userId,
+              name: this.name,
+              address: this.address,
+              date: this.date,
+              time: this.time,
+              code:this.randomCode,
+              timestamp:new Date(),
+              avatar: this.photo,
+            })
+    }
+  },
+};
+</script>
+
+<style scoped>
+</style>
