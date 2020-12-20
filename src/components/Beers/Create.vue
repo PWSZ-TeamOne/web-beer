@@ -13,15 +13,21 @@
         </v-col>
         <v-col
           cols="12"
-          md="4"
+          md="6"
         ><v-img
           max-height="auto"
           max-width="100%"
           :src="this.photo"
         ></v-img>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
           <v-file-input
             v-model="file"
             @change="storePhoto($event);"
+            required
           ></v-file-input>
         </v-col>
         <v-col
@@ -40,8 +46,8 @@
           md="4"
         >
           <v-text-field
-            v-model="address"
-            label="Address"
+            v-model="barcode"
+            label="Barcode"
             required
           ></v-text-field>
         </v-col>
@@ -49,25 +55,54 @@
           cols="12"
           md="4"
         >
-          <v-date-picker
-            locale="en-in"
-            :min="moment(new Date()).format('YYYY-MM-DD')"
-            v-model="date"
-            no-title
-          ></v-date-picker>
+          <v-text-field
+            v-model="blg"
+            label="BLG"
+            type="number"
+            min="0"
+            max="100"
+            required
+          ></v-text-field>
         </v-col>
+
         <v-col
           cols="12"
           md="4"
         >
-          <v-time-picker
-          v-model="time"
-          format="24hr"
-         ></v-time-picker>
+          <v-text-field
+            v-model="percent"
+            label="Percent"
+            type="number"
+            min="0"
+            max="100"
+            required
+          ></v-text-field>
         </v-col>
+
         <v-col
           cols="12"
           md="4"
+        >
+          <v-text-field
+            v-model="country"
+            label="Country"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="12"
+        >
+          <v-textarea
+            v-model="description"
+            label="Description"
+            required
+          ></v-textarea>
+        </v-col>
+        <v-col
+          cols="12"
+          md="12"
         >
           <v-btn
             elevation="2"
@@ -86,48 +121,48 @@ import md5 from 'js-md5'
 import firebase from "firebase";
 
 export default {
-  name: "MeetingsCreate",
+  name: "BeersCreate",
   mixins: [storePhoto],
   data() {
     return {
+      errors: [],
       name: null,
-      address: null,
-      date: null,
-      time: null,
+      country: null,
+      blg: null,
+      percent: null,
+      barcode: null,
+      description: null,
       file: [],
       photo: "https://firebasestorage.googleapis.com/v0/b/browarapp.appspot.com/o/example_beer.jpg?alt=media&token=88798838-5ad4-4980-bae3-5c9d4f4ba714",
-      minDate: "",
       id: null,
-      randomCode:null,
-      errors: []
     };
   },
   methods: {
     store(){
       if(this.checkForm() === true){
-        console.log('true');
         this.id = md5(new Date() + '|' + this.name + '|' + this.$store.state.user.userId).toString();
-        this.randomCode = Math.floor(Math.random() * 99999999 + 10000000).toString();
         firebase
             .firestore()
-              .collection("events")
+              .collection("beers")
               .doc(this.id)
               .set({
-                active: true,
                 userId: this.$store.state.user.userId,
+                eventId: this.$store.state.meetingId,
                 name: this.name,
-                address: this.address,
-                date: this.date,
-                time: this.time,
-                code:this.randomCode,
+                blg: this.blg,
+                country: this.country,
+                percent: this.percent,
+                description:this.description,
+                barcode:this.barcode,
                 timestamp:new Date(),
-                avatar: this.photo,
+                photo: this.photo,
                 id:this.id
               }).then(()=>{
-                this.$router.push("/meetings");
+                this.$router.push("/meet");
               });
-      }else{}
+      }
     },
+
     checkForm(){
       this.errors = [];
       console.log(this.errors);
@@ -136,16 +171,12 @@ export default {
         this.errors.push('Name required.');
         console.log('error');
       }
-      if (!this.address) {
-        this.errors.push('Age required.');
+      if (!this.percent) {
+        this.errors.push('Percent required.');
         console.log('error');
       }
-      if (!this.date) {
-        this.errors.push('Date date.');
-        console.log('error');
-      }
-      if (!this.time) {
-        this.errors.push('Time required.');
+      if (!this.country) {
+        this.errors.push('Country required.');
         console.log('error');
       }
 
@@ -160,7 +191,4 @@ export default {
 </script>
 
 <style scoped>
-.v-picker__title{
-  background-color: cornflowerblue!important;
-}
 </style>

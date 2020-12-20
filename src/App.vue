@@ -78,7 +78,7 @@ button:hover {
   color: black;
 }
 html {
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 body {
   background-color: white !important;
