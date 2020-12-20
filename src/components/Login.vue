@@ -74,7 +74,7 @@ export default {
                 });
                 this.alert("Logowanie prawidłowe!", "success");
                 console.log("zalogowano");
-                this.$router.push("/meetings").catch(()=>{});;
+                this.$router.push("/meetings").catch(()=>{});
               });
           }
         })

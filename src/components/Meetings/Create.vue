@@ -5,15 +5,17 @@
         <v-col
           cols="12"
           md="4"
-        >
-        {{photo}}
+        ><v-img
+          max-height="auto"
+          max-width="100%"
+          :src="this.photo"
+        ></v-img>
           <v-file-input
             v-model="file"
             @change="storePhoto($event);"
             required
           ></v-file-input>
         </v-col>
-
         <v-col
           cols="12"
           md="4"
@@ -35,7 +37,6 @@
             required
           ></v-text-field>
         </v-col>
-        {{id}}
         <v-col
           cols="12"
           md="4"
@@ -85,8 +86,8 @@ export default {
       address: null,
       date: null,
       time: null,
-      file: null,
-      photo: null,
+      file: "https://firebasestorage.googleapis.com/v0/b/browarapp.appspot.com/o/example_beer.jpg?alt=media&token=88798838-5ad4-4980-bae3-5c9d4f4ba714",
+      photo: "https://firebasestorage.googleapis.com/v0/b/browarapp.appspot.com/o/example_beer.jpg?alt=media&token=88798838-5ad4-4980-bae3-5c9d4f4ba714",
       minDate: "",
       id: null,
       randomCode:null
@@ -110,7 +111,10 @@ export default {
               code:this.randomCode,
               timestamp:new Date(),
               avatar: this.photo,
-            })
+              id:this.id
+            }).then(()=>{
+              this.$router.push("/meetings");
+            });
     }
   },
 };

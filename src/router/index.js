@@ -4,6 +4,7 @@ import Login from "@/components/Login";
 import Register from "@/components/Register";
 import MeetingsIndex from "@/components/Meetings/Index";
 import MeetingsCreate from "@/components/Meetings/Create";
+import MeetIndex from "@/components/Meetings/Item";
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ export default new Router({
       path: "/meetings/create",
       name: "MeetingsCreate",
       component: MeetingsCreate
+    },
+    {
+      path: "/meet",
+      name: "MeetIndex",
+      component: MeetIndex
     },
     {
       path: "/register",

@@ -13,7 +13,8 @@ export default new Vuex.Store({
       firstName: null,
       lastName: null,
     },
-    logged:null
+    logged:null,
+    meetingId:null
   },
   getters: {
     getUser: state => state.admin,
@@ -27,12 +28,20 @@ export default new Vuex.Store({
       state.admin = data;
       state.logged = null;
     },
+    setMeetingId(state, data) {
+      state.meetingId = data;
+    },
   },
   actions: {
     setSession({
       commit
     }, data) {
       commit('storeUser', data)
+    },
+    setMeetingId({
+      commit
+    }, data) {
+      commit('setMeetingId', data)
     },
     logout({
       commit
