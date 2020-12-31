@@ -22,7 +22,7 @@
           <v-btn
             elevation="2"
             class="mx-3"
-            @click="$router.push('meetings/create')"
+            @click="searchEventByTheCode"
           >Join metting</v-btn>
         </v-card-title>
         <v-data-table :headers="headers" :items="meetings" :search="search">
@@ -34,7 +34,7 @@
           <template v-slot:[`item.id`]="{ item }">
             <v-icon
               small
-              @click="seeItem(item.id)"
+              @click="seeItem(item.id, item.userId)"
             >
               mdi-eye
             </v-icon>
@@ -52,6 +52,12 @@
               mdi-delete
             </v-icon>
           </template>
+          <template v-slot:[`item.active`]="{ item }">
+            <v-simple-checkbox
+              @click="setActive(item)"
+              v-model="item.active"
+            ></v-simple-checkbox>
+          </template>
         </v-data-table>
       </v-card>
     </v-row>
@@ -68,7 +74,7 @@ export default {
       meetingCode:null,
       search: "",
       headers: [
-        { text: "", value: "avatar" },
+        { text: "", value: "avatar", filterable: false },
         {
           text: "Name",
           align: "start",
@@ -77,8 +83,8 @@ export default {
         },
         { text: "Code", value: "code" },
         { text: "Date", value: "date" },
-        { text: "Address", value: "address" },
         { text: "Actions", value: "id"},
+        { text: "Active", value: "active"},
       ],
     };
   },
@@ -105,12 +111,44 @@ export default {
         });
       }
     },
-    seeItem(id){
-      store.dispatch("setMeetingId", id).
+    seeItem(id, userId){
+      store.dispatch("setMeetingId", id);
+      store.dispatch("setMeetingUserId", userId).
       then(()=>{
         this.$router.push("/meet");
-      });;
-    }
+      });
+    },
+    searchEventByTheCode(){
+      let eventByCode = db.collection("events")
+          .where("code", "==", this.meetingCode);
+
+        eventByCode.get().then((querySnapshot) => {
+          querySnapshot.forEach(function(doc) {
+              eventByCode = doc.data();
+          });
+          this.joinToEvent(eventByCode);
+        });
+    },
+    joinToEvent(eventByCode){
+      if(eventByCode.id != null){
+        this.seeItem(eventByCode.id, eventByCode.userId);
+        this.meetingCode = null;
+      }else{
+        this.alert("No event with that code! Try again!", "error");
+      }
+    },
+    setActive(item) {
+      db.collection("events")
+        .where("id", "==", item.id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            db.collection("events").doc(doc.id).update({
+              active: item.active,
+            });
+          });
+        });
+    },
   },
   created() {
     this.getMettings();

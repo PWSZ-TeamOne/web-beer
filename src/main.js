@@ -13,6 +13,7 @@ import moment from 'moment';
 Vue.prototype.moment = moment;
 
 require("firebase/firestore");
+require('vue-flash-message/dist/vue-flash-message.min.css');
 Vue.use(BootstrapVue);
 
 const config = {
@@ -25,6 +26,16 @@ const config = {
   appId: "1:883017495908:web:2c4fa4e6f4558ebae5b671"
 };
 
+Vue.mixin({
+  methods: {
+    alert(info, type) {
+        this.flash(info, type, {
+            timeout: 30000000,
+        });
+        console.log('alert');
+    }
+  }
+})
 
 firebase.initializeApp(config);
 

@@ -124,6 +124,7 @@ export default {
                 avatar: this.photo,
                 id:this.id
               }).then(()=>{
+                this.alert("Meeting added!", "success");
                 this.$router.push("/meetings");
               });
       }else{}

@@ -6,10 +6,10 @@
           cols="12"
           md="12"
         >
-          <p v-if="errors.length" class="text-left">
+          <!-- <p v-if="errors.length" class="text-left">
             <b>Please correct the following error(s):</b><br>
               <span class="text-danger" v-for="error in errors" v-bind:key="error">{{ error }}<br></span>
-          </p>
+          </p> -->
         </v-col>
         <v-col
           cols="12"
@@ -158,6 +158,7 @@ export default {
                 photo: this.photo,
                 id:this.id
               }).then(()=>{
+                this.alert("Beer added!", "success");
                 this.$router.push("/meet");
               });
       }
@@ -169,14 +170,17 @@ export default {
 
       if (!this.name) {
         this.errors.push('Name required.');
+        this.alert("Name required!", "error");
         console.log('error');
       }
       if (!this.percent) {
         this.errors.push('Percent required.');
+        this.alert("Percent required!", "error");
         console.log('error');
       }
       if (!this.country) {
         this.errors.push('Country required.');
+        this.alert("Country required!", "error");
         console.log('error');
       }
 

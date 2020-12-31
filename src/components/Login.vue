@@ -1,9 +1,5 @@
 <template>
   <div>
-    <flash-message
-      transitionIn="animated swing"
-      class="alert-box"
-    ></flash-message>
     <div class="d-flex align-items-center login-box">
       <div class="m-auto">
         <h2>{{ this.text }}</h2>

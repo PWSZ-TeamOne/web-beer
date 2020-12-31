@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
         <v-card class="w-100">
-          <h3>Meeting name: {{this.meet[0].name}}</h3>
+          <h3 class="p-2">Meeting name: {{this.meet[0].name}}</h3>
           <v-tabs >
             <v-tab>Beers
             </v-tab>

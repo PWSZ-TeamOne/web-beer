@@ -1,5 +1,9 @@
 <template>
-  <div id="app">
+  <div id="app" data-app>
+    <flash-message
+      transitionIn="animated swing"
+      class="alert-box"
+    ></flash-message>
     <div class="main-wrapper">
       <div class="navbar-bg"></div>
       <b-navbar
@@ -133,7 +137,7 @@ a {
   border-color: black !important;
 }
 .alert-box {
-  position: absolute;
+  position: fixed;
   z-index: 1051;
   right: 10px;
   top: 10px;
@@ -168,10 +172,15 @@ a {
     display: block !important;
   }
   .flash__message {
-    position: absolute !important;
+    position: fixed !important;
     z-index: 10001;
     right: 10px !important;
     top: 10px !important;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px;
+
   }
 }
 </style>
