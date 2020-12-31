@@ -30,7 +30,7 @@ Vue.mixin({
   methods: {
     alert(info, type) {
         this.flash(info, type, {
-            timeout: 30000000,
+            timeout: 3000,
         });
         console.log('alert');
     }

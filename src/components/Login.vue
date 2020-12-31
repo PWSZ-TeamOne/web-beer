@@ -39,7 +39,6 @@
 <script>
 import firebase from "firebase";
 import store from "../store";
-import alert from "../mixins/alert";
 export default {
   name: "Login",
   mixins: [alert],

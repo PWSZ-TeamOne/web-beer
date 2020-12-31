@@ -126,17 +126,19 @@
 import store from "@/store";
 import firebase from "firebase";
 import md5 from 'js-md5'
+import validateRate from "@/mixins/validateRate";
 
 export default {
   name: "IndexBeers",
+  mixins: [validateRate],
   data() {
     return {
       beers: [],
       search: "",
       dialog: false,
-      rate1: 0,
-      rate2: 0,
-      rate3: 0,
+      rate1: null,
+      rate2: null,
+      rate3: null,
       beerId: null,
       beerName: null,
       id:null,
@@ -208,21 +210,23 @@ export default {
         });
     },
     storeRateTheBeer(){
-      firebase
-        .firestore()
-          .collection("rates")
-          .doc(this.checkId())
-            .set({
-              userId: this.$store.state.user.userId,
-              eventId: this.$store.state.meetingId,
-              beerId: this.beerId,
-              rate1: this.rate1,
-              rate2: this.rate2,
-              rate3: this.rate3,
-            }).then(()=>{
-              this.dialog = false;
-              this.alert("Rate added!", "success");
-            });
+      if(this.checkForm() === true){
+        firebase
+          .firestore()
+            .collection("rates")
+            .doc(this.checkId())
+              .set({
+                userId: this.$store.state.user.userId,
+                eventId: this.$store.state.meetingId,
+                beerId: this.beerId,
+                rate1: this.rate1,
+                rate2: this.rate2,
+                rate3: this.rate3,
+              }).then(()=>{
+                this.dialog = false;
+                this.alert("Rate added!", "success");
+              });
+      }
     },
     setRateData(data){
       console.log(data);

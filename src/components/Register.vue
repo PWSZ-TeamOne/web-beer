@@ -48,7 +48,6 @@
 
 <script>
 import firebase from "firebase";
-import alert from "../mixins/alert";
 import store from "../store";
 export default {
   name: "Register",
