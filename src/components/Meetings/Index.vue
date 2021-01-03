@@ -40,7 +40,6 @@
             </v-icon>
             <v-icon
               small
-              class="mr-2"
               @click="editItem(item)"
             >
               mdi-pencil
@@ -50,6 +49,12 @@
               @click="deleteItem(item.id)"
             >
               mdi-delete
+            </v-icon>
+            <v-icon
+              small
+              @click="seeStats(item.id)"
+            >
+              mdi-star
             </v-icon>
           </template>
           <template v-slot:[`item.active`]="{ item }">
@@ -118,9 +123,16 @@ export default {
         this.$router.push("/meet");
       });
     },
+    seeStats(id){
+      store.dispatch("setMeetingId", id).
+      then(()=>{
+        this.$router.push("/stats");
+      });
+    },
     searchEventByTheCode(){
       let eventByCode = db.collection("events")
-          .where("code", "==", this.meetingCode);
+          .where("code", "==", this.meetingCode)
+          .where("active", "==", true);
 
         eventByCode.get().then((querySnapshot) => {
           querySnapshot.forEach(function(doc) {

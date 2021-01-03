@@ -4,76 +4,89 @@
       <v-row>
         <v-col
           cols="12"
-          md="12"
-        >
-          <p v-if="errors.length" class="text-left">
-            <b>Please correct the following error(s):</b><br>
-              <span class="text-danger" v-for="error in errors" v-bind:key="error">{{ error }}<br></span>
-          </p>
-        </v-col>
-        <v-col
-          cols="12"
           md="4"
         ><v-img
           max-height="auto"
           max-width="100%"
           :src="this.photo"
         ></v-img>
-          <v-file-input
-            v-model="file"
-            @change="storePhoto($event);"
-          ></v-file-input>
         </v-col>
         <v-col
           cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="name"
-            label="Name"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="address"
-            label="Address"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-date-picker
-            locale="en-in"
-            :min="moment(new Date()).format('YYYY-MM-DD')"
-            v-model="date"
-            no-title
-          ></v-date-picker>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-time-picker
-          v-model="time"
-          format="24hr"
-         ></v-time-picker>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-btn
-            elevation="2"
-            @click="store"
-            outlined
-          >Save</v-btn>
+          md="8"
+          >
+          <v-row>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-text-field
+                v-model="name"
+                label="Name"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-text-field
+                v-model="address"
+                label="Address"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+            >
+            <v-menu
+                v-model="fromDateMenu"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    label="Date"
+                    readonly
+                    :value="fromDateDisp"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  locale="en-in"
+                  v-model="date"
+                  no-title
+                  @input="fromDateMenu = false"
+                  :min="moment(new Date()).format('YYYY-MM-DD')"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-file-input
+                v-model="file"
+                label="Photo"
+                @change="storePhoto($event);"
+              ></v-file-input>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-btn
+                elevation="2"
+                @click="store"
+                outlined
+              >Save</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -82,12 +95,13 @@
 <script>
 import store from "@/store";
 import storePhoto from "@/mixins/storePhoto";
+import validateMeeting from "@/mixins/validateMeeting";
 import md5 from 'js-md5'
 import firebase from "firebase";
 
 export default {
   name: "MeetingsCreate",
-  mixins: [storePhoto],
+  mixins: [storePhoto, validateMeeting],
   data() {
     return {
       name: null,
@@ -96,11 +110,16 @@ export default {
       time: null,
       file: [],
       photo: "https://firebasestorage.googleapis.com/v0/b/browarapp.appspot.com/o/example_beer.jpg?alt=media&token=88798838-5ad4-4980-bae3-5c9d4f4ba714",
-      minDate: "",
       id: null,
       randomCode:null,
-      errors: []
+      errors: [],
+      fromDateMenu: false
     };
+  },
+  computed: {
+      fromDateDisp() {
+        return this.date;
+      },
   },
   methods: {
     store(){
@@ -129,35 +148,8 @@ export default {
               });
       }else{}
     },
-    checkForm(){
-      this.errors = [];
-      console.log(this.errors);
-
-      if (!this.name) {
-        this.errors.push('Name required.');
-        console.log('error');
-      }
-      if (!this.address) {
-        this.errors.push('Age required.');
-        console.log('error');
-      }
-      if (!this.date) {
-        this.errors.push('Date date.');
-        console.log('error');
-      }
-      if (!this.time) {
-        this.errors.push('Time required.');
-        console.log('error');
-      }
-
-      if(this.errors.length){
-        return false;
-      }else{
-        return true;
-      }
-    }
   },
-};
+}
 </script>
 
 <style scoped>

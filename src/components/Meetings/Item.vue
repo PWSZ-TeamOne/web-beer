@@ -1,22 +1,14 @@
 <template>
   <v-container>
     <v-row>
-        <v-card class="w-100">
+        <v-card class="w-100 border-0">
           <h3 class="p-2">Meeting name: {{this.meet[0].name}}</h3>
           <v-tabs >
             <v-tab>Beers
             </v-tab>
-            <v-tab>
-              Users
-            </v-tab>
             <v-tab-item>
               <v-card flat>
                 <IndexBeers />
-              </v-card>
-            </v-tab-item>
-            <v-tab-item>
-              <v-card flat>
-                <!-- <IndexUsers /> -->
               </v-card>
             </v-tab-item>
           </v-tabs>

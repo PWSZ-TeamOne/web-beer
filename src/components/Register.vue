@@ -51,7 +51,6 @@ import firebase from "firebase";
 import store from "../store";
 export default {
   name: "Register",
-  mixins: [alert],
   data() {
     return {
       text: "Rejestracja",

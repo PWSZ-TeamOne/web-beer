@@ -44,16 +44,16 @@ export default {
         .then(() => {
           store.dispatch("logout", null);
           this.info = "nie zalogowany";
-          console.log("logged out" + this.$store.state.admin);
-          this.$router.push("/");
+          console.log("logged out");
+          this.$router.push("login");
         });
     },
   },
   created: function () {
     if (this.$store.state.logged !== null) {
-      this.$router.push("/users").catch(()=>{});;
+      this.$router.push("meetings").catch(()=>{});
     } else {
-      this.$router.push("/");
+      this.$router.push("login").catch(()=>{});
     }
   },
 };

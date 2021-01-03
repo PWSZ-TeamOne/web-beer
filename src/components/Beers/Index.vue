@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pb-0">
     <v-row>
       <v-card class="w-100">
         <v-card-title>
@@ -26,7 +26,6 @@
           <template v-slot:[`item.id`]="{ item }" v-if="this.$store.state.meetingUserId == this.$store.state.user.userId">
               <v-icon
                 small
-                class="mr-2"
                 @click="editItem(item)"
               >
                 mdi-pencil
@@ -37,20 +36,20 @@
               >
                 mdi-delete
               </v-icon>
-            <v-btn
-              color="dark"
+              <v-icon
+                small
               @click="getRateOfTheBeer(item.id, item.name)"
-            >
-              Rate
-            </v-btn>
+              >
+                mdi-star
+              </v-icon>
           </template>
           <template v-slot:[`item.id`]="{ item }"  v-else>
-            <v-btn
-              color="dark"
+            <v-icon
+              small
               @click="getRateOfTheBeer(item.id, item.name)"
             >
-              Rate
-            </v-btn>
+              mdi-star
+            </v-icon>
           </template>
         </v-data-table>
       </v-card>
@@ -67,9 +66,10 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  label="Smak (0-10)"
+                  label="Taste (0-10)"
                   type="number"
                   v-model="rate1"
+                  @change="calc"
                   min="0"
                   max="10"
                   required
@@ -77,9 +77,10 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  label="Moc (0-10)"
+                  label="Look (0-10)"
                   type="number"
                   v-model="rate2"
+                  @change="calc"
                   min="0"
                   max="10"
                   required
@@ -87,13 +88,17 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  label="Aromat (0-10)"
+                  label="Smell (0-10)"
                   type="number"
                   v-model="rate3"
+                  @change="calc"
                   min="0"
                   max="10"
                   required
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <h5>Average: {{this.avg}}</h5>
               </v-col>
             </v-row>
           </v-container>
@@ -127,10 +132,11 @@ import store from "@/store";
 import firebase from "firebase";
 import md5 from 'js-md5'
 import validateRate from "@/mixins/validateRate";
+import calculateRate from "@/mixins/calculateRate";
 
 export default {
   name: "IndexBeers",
-  mixins: [validateRate],
+  mixins: [validateRate, calculateRate],
   data() {
     return {
       beers: [],
@@ -139,8 +145,9 @@ export default {
       rate1: null,
       rate2: null,
       rate3: null,
+      avg: 0,
       beerId: null,
-      beerName: null,
+      beer: null,
       id:null,
       headers: [
         { text: "", value: "avatar" },
@@ -151,6 +158,8 @@ export default {
           value: "name",
         },
         { text: "Percent of alcohol", value: "percent"},
+        { text: "BLG", value: "blg"},
+        { text: "Country", value: "country"},
         { text: "Actions", value: "id"},
       ],
     };
@@ -191,6 +200,7 @@ export default {
               });
     },
     getRateOfTheBeer(id, name){
+      this.unsetRateData();
       let docId = null;
       let ratedBeer = db.collection("rates")
           .where("beerId", "==", id)
@@ -202,8 +212,10 @@ export default {
               ratedBeer = doc.data();
               docId = doc.id;
           });
-          this.id = docId;
-          this.setRateData(ratedBeer);
+          if(docId){
+            this.setRateData(ratedBeer);
+            this.id = docId;
+          }
           this.beerId = id;
           this.beerName = name;
           this.dialog = true;
@@ -224,15 +236,23 @@ export default {
                 rate3: this.rate3,
               }).then(()=>{
                 this.dialog = false;
+                this.unsetRateData();
                 this.alert("Rate added!", "success");
               });
       }
     },
     setRateData(data){
-      console.log(data);
       this.rate1 = data.rate1;
       this.rate2 = data.rate2;
       this.rate3 = data.rate3;
+      this.calc();
+    },
+    unsetRateData(){
+      this.rate1 = null;
+      this.rate2 = null;
+      this.rate3 = null;
+      this.avg = 0;
+      this.id = null;
     },
     checkId(){
       if(this.id != null){

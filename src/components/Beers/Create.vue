@@ -6,14 +6,10 @@
           cols="12"
           md="12"
         >
-          <!-- <p v-if="errors.length" class="text-left">
-            <b>Please correct the following error(s):</b><br>
-              <span class="text-danger" v-for="error in errors" v-bind:key="error">{{ error }}<br></span>
-          </p> -->
         </v-col>
         <v-col
           cols="12"
-          md="6"
+          md="4"
         ><v-img
           max-height="auto"
           max-width="100%"
@@ -22,93 +18,103 @@
         </v-col>
         <v-col
           cols="12"
-          md="6"
+          md="8"
         >
-          <v-file-input
-            v-model="file"
-            @change="storePhoto($event);"
-            required
-          ></v-file-input>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="name"
-            label="Name"
-            required
-          ></v-text-field>
-        </v-col>
+          <v-row>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-file-input
+                v-model="file"
+                label="Photo"
+                @change="storePhoto($event);"
+                required
+              ></v-file-input>
+            </v-col>
+            <v-col
+              cols="12"
+              md="6"
+            >
+              <v-text-field
+                v-model="name"
+                label="Name"
+                required
+              ></v-text-field>
+            </v-col>
 
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="barcode"
-            label="Barcode"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="blg"
-            label="BLG"
-            type="number"
-            min="0"
-            max="100"
-            required
-          ></v-text-field>
-        </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="barcode"
+                label="Barcode"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="blg"
+                label="BLG"
+                type="number"
+                min="0"
+                max="100"
+                required
+              ></v-text-field>
+            </v-col>
 
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="percent"
-            label="Percent"
-            type="number"
-            min="0"
-            max="100"
-            required
-          ></v-text-field>
-        </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="percent"
+                label="Percent"
+                type="number"
+                min="0"
+                max="100"
+                required
+              ></v-text-field>
+            </v-col>
 
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="country"
-            label="Country"
-            required
-          ></v-text-field>
-        </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="country"
+                label="Country"
+                required
+              ></v-text-field>
+            </v-col>
 
-        <v-col
-          cols="12"
-          md="12"
-        >
-          <v-textarea
-            v-model="description"
-            label="Description"
-            required
-          ></v-textarea>
-        </v-col>
-        <v-col
-          cols="12"
-          md="12"
-        >
-          <v-btn
-            elevation="2"
-            @click="store"
-            outlined
-          >Save</v-btn>
+            <v-col
+              cols="12"
+              md="8"
+            >
+              <v-textarea
+                v-model="description"
+                label="Description"
+                required
+                rows="2"
+              ></v-textarea>
+            </v-col>
+            <v-col
+              cols="12"
+              md="12"
+              class="text-left"
+            >
+              <v-btn
+                elevation="2"
+                @click="store"
+                outlined
+              >Save</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
