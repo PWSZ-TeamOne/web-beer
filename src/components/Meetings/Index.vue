@@ -40,7 +40,7 @@
             </v-icon>
             <v-icon
               small
-              @click="editItem(item)"
+              @click="editItem(item.id)"
             >
               mdi-pencil
             </v-icon>
@@ -121,6 +121,12 @@ export default {
       store.dispatch("setMeetingUserId", userId).
       then(()=>{
         this.$router.push("/meet");
+      });
+    },
+    editItem(id){
+      store.dispatch("setEditedMeetingId", id).
+      then(()=>{
+        this.$router.push("/meetings/edit");
       });
     },
     seeStats(id){

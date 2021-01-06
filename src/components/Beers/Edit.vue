@@ -128,7 +128,7 @@ import md5 from 'js-md5'
 import firebase from "firebase";
 
 export default {
-  name: "BeersCreate",
+  name: "BeersEdit",
   mixins: [storePhoto, validateBeer],
   data() {
     return {
@@ -147,7 +147,6 @@ export default {
   },
   methods: {
     getBeer(){
-      let beerFounded = [];
       db.collection("beers")
         .doc(this.$store.state.editedBeerId)
         .get()

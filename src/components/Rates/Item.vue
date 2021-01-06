@@ -56,7 +56,7 @@ export default {
       this.rate2 = 0;
       this.rate3 = 0;
       this.avg = 0;
-      this.counter=0;
+      this.counter = 0;
     },
   },
   created() {

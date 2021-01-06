@@ -69,7 +69,7 @@
                   label="Taste (0-10)"
                   type="number"
                   v-model="rate1"
-                  @change="calc"
+                  @change.native="calc"
                   min="0"
                   max="10"
                   required
@@ -80,7 +80,7 @@
                   label="Look (0-10)"
                   type="number"
                   v-model="rate2"
-                  @change="calc"
+                  @change.native="calc"
                   min="0"
                   max="10"
                   required
@@ -91,7 +91,7 @@
                   label="Smell (0-10)"
                   type="number"
                   v-model="rate3"
-                  @change="calc"
+                  @change.native="calc"
                   min="0"
                   max="10"
                   required
@@ -148,6 +148,7 @@ export default {
       avg: 0,
       beerId: null,
       beer: null,
+      beerName: null,
       id:null,
       headers: [
         { text: "", value: "avatar" },
@@ -242,8 +243,10 @@ export default {
       }
     },
     editItem(id){
-      store.dispatch("setEditedBeerId", id);
-      this.$router.push("/beer/edit");
+      store.dispatch("setEditedBeerId", id).
+      then(()=>{
+        this.$router.push("/beer/edit");
+      });
     },
     setRateData(data){
       this.rate1 = data.rate1;

@@ -4,14 +4,12 @@ import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     user: {
       userId: null,
-      email: null,
-      firstName: null,
-      lastName: null,
+      email: null
     },
     logged:null,
     meetingId:null,
@@ -76,4 +74,6 @@ export default new Vuex.Store({
       commit('logoutUser', data)
     }
   }
-})
+});
+
+export default store;

@@ -137,7 +137,7 @@ export default {
                 name: this.name,
                 address: this.address,
                 date: this.date,
-                time: this.time,
+                time: this.date,
                 code:this.randomCode,
                 timestamp:new Date(),
                 avatar: this.photo,

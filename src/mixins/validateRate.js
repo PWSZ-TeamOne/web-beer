@@ -2,7 +2,6 @@ export default {
   methods: {
     checkForm(){
       this.errors = [];
-      console.log(this.errors);
 
       if (this.rate1 < 0 || this.rate1 > 10 || this.rate1 == null) {
         this.errors.push('Rate 1 has incorret data.');

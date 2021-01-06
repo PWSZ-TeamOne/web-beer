@@ -2,7 +2,6 @@ export default {
   methods: {
     checkForm(){
       this.errors = [];
-      console.log(this.errors);
 
       if (!this.name) {
         this.errors.push('Name required.');

@@ -38,7 +38,7 @@
         </button>
         <br />
         <br />
-        <router-link to="/">
+        <router-link to="/login">
           <button id="login" class="btn-sm btn-info">Zaloguj się!</button>
         </router-link>
       </div>
@@ -72,18 +72,15 @@ export default {
             .set({
               userId: result.user.uid,
               email: this.email,
-              firstName: "Kamil",
-              lastName: "Piech",
-              avatar: "https://scontent-atl3-2.xx.fbcdn.net/v/t1.30497-1/c29.0.100.100a/p100x100/84628273_176159830277856_972693363922829312_n.jpg?_nc_cat=1&ccb=2&_nc_sid=12b3be&_nc_ohc=5zieHBn2lfEAX9c-AJw&_nc_ht=scontent-atl3-2.xx&tp=27&oh=d4bfe4bc86ddf5eff4cb54254d8bfc57&oe=5FECAC75",
+              active: 1
             })
-            .then((docRef) => {
-              let loginData = {
+            .then(() => {
+              let user = {
                 userId: result.user.uid,
-                email: result.user.email,
-                role: result.user.role,
+                email: result.user.email
               };
-              store.dispatch("setSession", loginData);
-              this.$router.push({ path: "/users" });
+              store.dispatch("setSession", user);
+              this.$router.push({ path: "/meetings" });
             })
             .catch(() => {
               this.alert("Rejestracja nie prawidłowa!", "error");

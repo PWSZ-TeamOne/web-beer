@@ -1,9 +1,11 @@
 import Vue from "vue";
+import store from "@/store";
 import Router from "vue-router";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
 import MeetingsIndex from "@/components/Meetings/Index";
 import MeetingsCreate from "@/components/Meetings/Create";
+import MeetingsEdit from "@/components/Meetings/Edit";
 import MeetIndex from "@/components/Meetings/Item";
 import BeersCreate from "@/components/Beers/Create";
 import BeersEdit from "@/components/Beers/Edit";
@@ -11,7 +13,8 @@ import MeetingStats from "@/components/Rates/Index";
 
 Vue.use(Router);
 
-export default new Router({
+
+const router = new Router({
   //mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -29,6 +32,11 @@ export default new Router({
       path: "/meetings/create",
       name: "MeetingsCreate",
       component: MeetingsCreate
+    },
+    {
+      path: "/meetings/edit",
+      name: "MeetingsEdit",
+      component: MeetingsEdit
     },
     {
       path: "/beer/create",
@@ -49,11 +57,18 @@ export default new Router({
       path: "/stats",
       name: "MeetingStats",
       component: MeetingStats
-    },
-    {
-      path: "/register",
-      name: "Register",
-      component: Register
     }
+    // {
+    //   path: "/register",
+    //   name: "Register",
+    //   component: Register
+    // }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if ((to.name !== 'Login' && to.name !== 'Register')  && store.state.logged !== true) next({ name: 'Login' })
+  else next()
+});
+
+export default router;

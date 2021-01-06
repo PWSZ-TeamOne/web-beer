@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
         <v-card class="w-100 border-0">
-          <h3 class="p-2">Meeting name: {{this.meet[0].name}}</h3>
+          <h3 class="p-2">Meeting name: {{this.meet.name}}</h3>
           <v-tabs >
             <v-tab>Beers
             </v-tab>
@@ -38,12 +38,11 @@ export default {
       db.collection("events")
       .doc(this.$store.state.meetingId)
       .get()
-      .then(function(doc) {
-        meetFounded.push(doc.data());
+      .then((doc) => {
+        this.meet = doc.data();
       }).catch(function(error) {
           console.log("Error getting cached document:", error);
       });
-      this.meet = meetFounded;
     },
   },
   created() {

@@ -2,7 +2,6 @@ export default {
   methods: {
     checkForm(){
       this.errors = [];
-      console.log(this.errors);
 
       if (!this.name) {
         this.errors.push('Name required.');
@@ -16,10 +15,6 @@ export default {
         this.errors.push('Date required.');
         this.alert("Date required!", "error");
       }
-      // if (!this.time) {
-      //   this.errors.push('Time required.');
-      //   this.alert('Time required!', 'error');
-      // }
 
       if(this.errors.length){
         return false;
