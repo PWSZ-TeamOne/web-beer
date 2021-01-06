@@ -26,7 +26,7 @@
           <template v-slot:[`item.id`]="{ item }" v-if="this.$store.state.meetingUserId == this.$store.state.user.userId">
               <v-icon
                 small
-                @click="editItem(item)"
+                @click="editItem(item.id)"
               >
                 mdi-pencil
               </v-icon>
@@ -240,6 +240,10 @@ export default {
                 this.alert("Rate added!", "success");
               });
       }
+    },
+    editItem(id){
+      store.dispatch("setEditedBeerId", id);
+      this.$router.push("/beer/edit");
     },
     setRateData(data){
       this.rate1 = data.rate1;

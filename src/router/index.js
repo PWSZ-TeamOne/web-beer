@@ -6,6 +6,7 @@ import MeetingsIndex from "@/components/Meetings/Index";
 import MeetingsCreate from "@/components/Meetings/Create";
 import MeetIndex from "@/components/Meetings/Item";
 import BeersCreate from "@/components/Beers/Create";
+import BeersEdit from "@/components/Beers/Edit";
 import MeetingStats from "@/components/Rates/Index";
 
 Vue.use(Router);
@@ -33,6 +34,11 @@ export default new Router({
       path: "/beer/create",
       name: "BeersCreate",
       component: BeersCreate
+    },
+    {
+      path: "/beer/edit",
+      name: "BeersEdit",
+      component: BeersEdit
     },
     {
       path: "/meet",

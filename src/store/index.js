@@ -15,6 +15,8 @@ export default new Vuex.Store({
     },
     logged:null,
     meetingId:null,
+    editedBeerId:null,
+    editedMeetingId:null,
     meetingUserId:null
   },
   getters: {
@@ -31,6 +33,12 @@ export default new Vuex.Store({
     },
     setMeetingId(state, data) {
       state.meetingId = data;
+    },
+    setEditedMeetingId(state, data) {
+      state.editedMeetingId = data;
+    },
+    setEditedBeerId(state, data) {
+      state.editedBeerId = data;
     },
     setMeetingUserId(state, data) {
       state.meetingUserId = data;
@@ -51,6 +59,16 @@ export default new Vuex.Store({
       commit
     }, data) {
       commit('setMeetingUserId', data)
+    },
+    setEditedMeetingId({
+      commit
+    }, data) {
+      commit('setEditedMeetingId', data)
+    },
+    setEditedBeerId({
+      commit
+    }, data) {
+      commit('setEditedBeerId', data)
     },
     logout({
       commit
