@@ -21,7 +21,7 @@
             <b-nav-item>
               <router-link class="nav-link" to="/meetings"
                 >Mettings
-                </router-link>
+              </router-link>
             </b-nav-item>
             <b-nav-item @click="logout" class="nav-link">Logout</b-nav-item>
           </b-navbar-nav>
@@ -48,6 +48,13 @@ export default {
           this.$router.push("/login");
         });
     },
+  },
+  created: function () {
+    if (this.$store.state.logged !== null) {
+      this.$router.push("meetings").catch(() => {});
+    } else {
+      this.$router.push("login").catch(() => {});
+    }
   },
 };
 </script>
