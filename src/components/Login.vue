@@ -48,7 +48,7 @@ export default {
   name: "Login",
   data() {
     return {
-      text: "Logowanie",
+      text: "Login with Facebook",
       password: null,
       email: null,
     };
