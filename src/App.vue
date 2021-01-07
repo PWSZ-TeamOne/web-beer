@@ -19,8 +19,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item>
-              <router-link class="nav-link" to="/meetings">Mettings</router-link>
-            </b-nav-item >
+              <router-link class="nav-link" to="/meetings"
+                >Mettings
+                </router-link>
+            </b-nav-item>
             <b-nav-item @click="logout" class="nav-link">Logout</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
@@ -51,8 +53,8 @@ export default {
 </script>
 
 <style>
-@import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900';
-@import 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css';
+@import "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900";
+@import "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -171,7 +173,6 @@ a {
     align-items: center;
     color: white;
     padding: 10px;
-
   }
 }
 </style>

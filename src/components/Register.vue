@@ -72,12 +72,12 @@ export default {
             .set({
               userId: result.user.uid,
               email: this.email,
-              active: 1
+              active: 1,
             })
             .then(() => {
               let user = {
                 userId: result.user.uid,
-                email: result.user.email
+                email: result.user.email,
               };
               store.dispatch("setSession", user);
               this.$router.push({ path: "/meetings" });

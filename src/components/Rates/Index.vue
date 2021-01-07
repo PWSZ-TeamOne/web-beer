@@ -18,7 +18,7 @@
             </div>
           </template>
           <template v-slot:[`item.id`]="{ item }">
-            <ItemRates v-bind:beerId="item.id"/>
+            <ItemRates v-bind:beerId="item.id" />
           </template>
         </v-data-table>
       </v-card>
@@ -45,24 +45,24 @@ export default {
           filterable: true,
           value: "name",
         },
-        { text: "Rating", value: "id"},
+        { text: "Rating", value: "id" },
       ],
     };
   },
   components: {
-    ItemRates
+    ItemRates,
   },
   methods: {
     getBeers() {
       db.collection("beers")
-      .where("eventId", "==", this.$store.state.meetingId)
-      .onSnapshot((querySnapshot) => {
-        let allBeers = [];
-        querySnapshot.forEach((doc) => {
-          allBeers.push(doc.data());
+        .where("eventId", "==", this.$store.state.meetingId)
+        .onSnapshot((querySnapshot) => {
+          let allBeers = [];
+          querySnapshot.forEach((doc) => {
+            allBeers.push(doc.data());
+          });
+          this.beers = allBeers;
         });
-        this.beers = allBeers;
-      });
     },
   },
   created() {

@@ -11,11 +11,11 @@ const store = new Vuex.Store({
       userId: null,
       email: null
     },
-    logged:null,
-    meetingId:null,
-    editedBeerId:null,
-    editedMeetingId:null,
-    meetingUserId:null
+    logged: null,
+    meetingId: null,
+    editedBeerId: null,
+    editedMeetingId: null,
+    meetingUserId: null
   },
   getters: {
     getUser: state => state.admin,

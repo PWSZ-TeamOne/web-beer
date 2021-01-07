@@ -1,6 +1,6 @@
 export default {
   methods: {
-    checkForm(){
+    checkForm() {
       this.errors = [];
 
       if (this.rate1 < 0 || this.rate1 > 10 || this.rate1 == null) {
@@ -16,9 +16,9 @@ export default {
         this.alert("Rate 3 has incorret data!", "error");
       }
 
-      if(this.errors.length){
+      if (this.errors.length) {
         return false;
-      }else{
+      } else {
         return true;
       }
     }

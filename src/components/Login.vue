@@ -41,8 +41,8 @@
 
 <script>
 import firebase from "firebase";
-import * as firebaseui from 'firebaseui';
-import 'firebaseui/dist/firebaseui.css';
+import * as firebaseui from "firebaseui";
+import "firebaseui/dist/firebaseui.css";
 import store from "../store";
 export default {
   name: "Login",
@@ -72,7 +72,7 @@ export default {
                   store.dispatch("setSession", userData);
                 });
                 this.alert("Logowanie prawidłowe!", "success");
-                this.$router.push("/meetings").catch(()=>{});
+                this.$router.push("/meetings").catch(() => {});
               });
           }
         })
@@ -82,33 +82,31 @@ export default {
     },
   },
   mounted() {
-      const uiConfig = {
-        signInOptions: [
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID
-        ]
-      }
+    const uiConfig = {
+      signInOptions: [firebase.auth.FacebookAuthProvider.PROVIDER_ID],
+    };
 
-      if(firebaseui.auth.AuthUI.getInstance()) {
-        const ui = firebaseui.auth.AuthUI.getInstance()
-        ui.start('#firebaseui-auth-container', uiConfig)
-      } else {
-        const ui = new firebaseui.auth.AuthUI(firebase.auth())
-        ui.start('#firebaseui-auth-container', uiConfig)
-      }
+    if (firebaseui.auth.AuthUI.getInstance()) {
+      const ui = firebaseui.auth.AuthUI.getInstance();
+      ui.start("#firebaseui-auth-container", uiConfig);
+    } else {
+      const ui = new firebaseui.auth.AuthUI(firebase.auth());
+      ui.start("#firebaseui-auth-container", uiConfig);
+    }
   },
   created() {
-      firebase.auth().onAuthStateChanged(user => {
-           if (user) {
-              const userData = {
-                email:user.email,
-                userId:user.uid
-              }
-              store.dispatch("setSession", userData).then(() =>{
-                this.$router.push("meetings");
-              });
-           }
-      })
-  }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const userData = {
+          email: user.email,
+          userId: user.uid,
+        };
+        store.dispatch("setSession", userData).then(() => {
+          this.$router.push("meetings");
+        });
+      }
+    });
+  },
 };
 </script>
 

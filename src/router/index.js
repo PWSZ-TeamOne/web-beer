@@ -67,7 +67,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if ((to.name !== 'Login' && to.name !== 'Register')  && store.state.logged !== true) next({ name: 'Login' })
+  if ((to.name !== 'Login' && to.name !== 'Register') && store.state.logged !== true) next({ name: 'Login' })
   else next()
 });
 

@@ -17,6 +17,13 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
 Vue.use(BootstrapVue);
 
 var config = {
+  apiKey: "AIzaSyBWMwv2we-I2SKMTssF8skuIsJdO1la1Tw",
+  authDomain: "beer-app-a75df.firebaseapp.com",
+  databaseURL: "https://beer-app-a75df.firebaseio.com",
+  projectId: "beer-app-a75df",
+  storageBucket: "beer-app-a75df.appspot.com",
+  messagingSenderId: "840267988533",
+  appId: "1:840267988533:web:c0bc65418d1bf61ca3bb7c"
 };
 
 Vue.mixin({

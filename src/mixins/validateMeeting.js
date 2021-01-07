@@ -1,6 +1,6 @@
 export default {
   methods: {
-    checkForm(){
+    checkForm() {
       this.errors = [];
 
       if (!this.name) {
@@ -16,9 +16,9 @@ export default {
         this.alert("Date required!", "error");
       }
 
-      if(this.errors.length){
+      if (this.errors.length) {
         return false;
-      }else{
+      } else {
         return true;
       }
     }

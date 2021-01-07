@@ -2,45 +2,23 @@
   <v-form>
     <v-container>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        ><v-img
-          max-height="auto"
-          max-width="100%"
-          :src="this.photo"
-        ></v-img>
+        <v-col cols="12" md="4"
+          ><v-img max-height="auto" max-width="100%" :src="this.photo"></v-img>
         </v-col>
-        <v-col
-          cols="12"
-          md="8"
-          >
+        <v-col cols="12" md="8">
           <v-row>
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-text-field
-                v-model="name"
-                label="Name"
-                required
-              ></v-text-field>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="name" label="Name" required></v-text-field>
             </v-col>
-            <v-col
-              cols="12"
-              md="6"
-            >
+            <v-col cols="12" md="6">
               <v-text-field
                 v-model="address"
                 label="Address"
                 required
               ></v-text-field>
             </v-col>
-            <v-col
-              cols="12"
-              md="6"
-            >
-            <v-menu
+            <v-col cols="12" md="6">
+              <v-menu
                 v-model="fromDateMenu"
                 :close-on-content-click="false"
                 :nudge-right="40"
@@ -66,25 +44,15 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
-            <v-col
-              cols="12"
-              md="6"
-            >
+            <v-col cols="12" md="6">
               <v-file-input
                 v-model="file"
                 label="Photo"
-                @change="storePhoto($event);"
+                @change="savePhoto($event)"
               ></v-file-input>
             </v-col>
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-btn
-                elevation="2"
-                @click="store"
-                outlined
-              >Save</v-btn>
+            <v-col cols="12" md="6">
+              <v-btn elevation="2" @click="store" outlined>Save</v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -112,27 +80,28 @@ export default {
       id: null,
       errors: [],
       fromDateMenu: false,
-      editedMeeting: {}
+      editedMeeting: {},
     };
   },
   computed: {
-      fromDateDisp() {
-        return this.date;
-      },
+    fromDateDisp() {
+      return this.date;
+    },
   },
   methods: {
-    getMeeting(){
+    getMeeting() {
       db.collection("events")
         .doc(this.$store.state.editedMeetingId)
         .get()
         .then((doc) => {
           this.editedMeeting = doc.data();
           this.setMeetingData();
-        }).catch(function(error) {
+        })
+        .catch(function (error) {
           console.log("Error getting cached document:", error);
         });
     },
-    setMeetingData(){
+    setMeetingData() {
       this.id = this.editedMeeting.id;
       this.name = this.editedMeeting.name;
       this.address = this.editedMeeting.address;
@@ -140,34 +109,36 @@ export default {
       this.time = this.editedMeeting.time;
       this.photo = this.editedMeeting.avatar;
     },
-    store(){
-      if(this.checkForm() === true){
+    store() {
+      if (this.checkForm() === true) {
         firebase
-            .firestore()
-              .collection("events")
-              .doc(this.id)
-              .update({
-                name: this.name,
-                address: this.address,
-                date: this.date,
-                time: this.date,
-                avatar: this.photo,
-              }).then(()=>{
-                store.dispatch("setEditedMeetingId", null);
-                this.alert("Meeting updated!", "success");
-                this.$router.push("/meetings");
-              });
-      }else{}
+          .firestore()
+          .collection("events")
+          .doc(this.id)
+          .update({
+            name: this.name,
+            address: this.address,
+            date: this.date,
+            time: this.date,
+            avatar: this.photo,
+          })
+          .then(() => {
+            store.dispatch("setEditedMeetingId", null);
+            this.alert("Meeting updated!", "success");
+            this.$router.push("/meetings");
+          });
+      } else {
+      }
     },
   },
   created() {
     this.getMeeting();
   },
-}
+};
 </script>
 
 <style scoped>
-.v-picker__title{
-  background-color: cornflowerblue!important;
+.v-picker__title {
+  background-color: cornflowerblue !important;
 }
 </style>
