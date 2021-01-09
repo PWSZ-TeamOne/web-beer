@@ -3,35 +3,7 @@
     <div class="d-flex align-items-center login-box">
       <div class="m-auto">
         <h2>{{ this.text }}</h2>
-        <br /><!--
-        <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Email</label>
-          <input
-            type="email"
-            ref="email"
-            id="email"
-            class="form-control"
-            v-model="email"
-            required
-          />
-        </div>
-        <div class="md-form mb-5 text-left">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label for="nickname">Hasło</label>
-          <input
-            type="password"
-            ref="password"
-            id="password"
-            class="form-control"
-            v-model="password"
-            required
-          />
-        </div>
-        <button @click="login" id="login" class="btn-lg">Zaloguj</button><br><br>
-        <router-link to="/register">
-          <button id="login" class="btn-sm btn-info">Rejestracja</button>
-        </router-link> -->
+        <br />
         <section id="firebaseui-auth-container"></section>
         <br />
       </div>
@@ -42,10 +14,12 @@
 <script>
 import firebase from "firebase";
 import * as firebaseui from "firebaseui";
+import logoutUser from "@/mixins/logoutUser";
 import "firebaseui/dist/firebaseui.css";
 import store from "../store";
 export default {
   name: "Login",
+  mixins: [logoutUser],
   data() {
     return {
       text: "Login with Facebook",
@@ -80,12 +54,45 @@ export default {
           this.alert("Logowanie nie prawidłowe, złe dane!", "error");
         });
     },
+    async checkUser(data) {
+      const userRef = firebase.firestore().collection("users").doc(data.userId);
+      const doc = await userRef.get();
+      if (doc.exists) {
+        this.checkActivityUser(doc.data().active, data);
+      } else {
+        this.storeUser(data);
+        this.dispatchAndRedirect(data);
+      }
+    },
+    checkActivityUser(active, data) {
+      if (active === true) {
+        this.dispatchAndRedirect(data);
+      } else {
+        this.alert(
+          "Your account is not active, contact with administrator!",
+          "error"
+        );
+        this.logout();
+      }
+    },
+    storeUser(data) {
+      firebase.firestore().collection("users").doc(data.userId).set({
+        userId: data.userId,
+        email: data.email,
+        active: true,
+      });
+    },
+    dispatchAndRedirect(data) {
+      store.dispatch("setSession", data).then(() => {
+        this.alert("Logged in!", "success");
+        this.$router.push("meetings");
+      });
+    },
   },
   mounted() {
     const uiConfig = {
       signInOptions: [firebase.auth.FacebookAuthProvider.PROVIDER_ID],
     };
-
     if (firebaseui.auth.AuthUI.getInstance()) {
       const ui = firebaseui.auth.AuthUI.getInstance();
       ui.start("#firebaseui-auth-container", uiConfig);
@@ -101,9 +108,7 @@ export default {
           email: user.email,
           userId: user.uid,
         };
-        store.dispatch("setSession", userData).then(() => {
-          this.$router.push("meetings");
-        });
+        this.checkUser(userData);
       }
     });
   },

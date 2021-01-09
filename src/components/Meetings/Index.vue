@@ -116,7 +116,8 @@ export default {
       let eventByCode = db
         .collection("events")
         .where("code", "==", this.meetingCode)
-        .where("active", "==", true);
+        .where("active", "==", true)
+        .where("adminActive", "==", true);
 
       eventByCode.get().then((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
@@ -130,7 +131,7 @@ export default {
         this.seeItem(eventByCode.id, eventByCode.userId);
         this.meetingCode = null;
       } else {
-        this.alert("No event with that code! Try again!", "error");
+        this.alert("No event with that code or no active! Try again!", "error");
       }
     },
     setActive(item) {

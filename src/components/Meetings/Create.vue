@@ -106,6 +106,7 @@ export default {
           .doc(this.id)
           .set({
             active: true,
+            adminActive: true,
             userId: this.$store.state.user.userId,
             name: this.name,
             address: this.address,

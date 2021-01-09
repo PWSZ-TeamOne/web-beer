@@ -23,7 +23,7 @@
                 >Mettings
               </router-link>
             </b-nav-item>
-            <b-nav-item @click="logout" class="nav-link">Logout</b-nav-item>
+            <b-nav-item @click="logoutUser" class="nav-link">Logout</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -36,19 +36,10 @@
 <script>
 import firebase from "firebase";
 import store from "./store";
+import logoutUser from "@/mixins/logoutUser";
 export default {
   name: "App",
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          store.dispatch("logout", null);
-          this.$router.push("/login");
-        });
-    },
-  },
+  mixins: [logoutUser],
   created: function () {
     if (this.$store.state.logged !== null) {
       this.$router.push("meetings").catch(() => {});
