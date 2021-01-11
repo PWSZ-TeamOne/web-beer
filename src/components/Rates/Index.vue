@@ -1,7 +1,7 @@
 <template>
   <v-container class="pb-0">
     <v-row>
-      <v-card class="w-100">
+      <v-card class="w-100 px-5">
         <v-card-title>
           <v-text-field
             v-model="search"

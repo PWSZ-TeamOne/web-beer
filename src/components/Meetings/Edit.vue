@@ -6,18 +6,18 @@
           ><v-img max-height="auto" max-width="100%" :src="this.photo"></v-img>
         </v-col>
         <v-col cols="12" md="8">
-          <v-row>
-            <v-col cols="12" md="6">
+          <v-row class="form-box">
+            <v-col cols="12" md="12">
               <v-text-field v-model="name" label="Name" required></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="address"
                 label="Address"
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-menu
                 v-model="fromDateMenu"
                 :close-on-content-click="false"
@@ -44,14 +44,14 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-file-input
                 v-model="file"
                 label="Photo"
                 @change="savePhoto($event)"
               ></v-file-input>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-btn elevation="2" @click="store" outlined>Save</v-btn>
             </v-col>
           </v-row>
