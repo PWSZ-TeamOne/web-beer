@@ -7,8 +7,8 @@
           ><v-img max-height="auto" max-width="100%" :src="this.photo"></v-img>
         </v-col>
         <v-col cols="12" md="8">
-          <v-row>
-            <v-col cols="12" md="6">
+          <v-row class="form-box">
+            <v-col cols="12" md="12">
               <v-file-input
                 v-model="file"
                 label="Photo"
@@ -16,18 +16,18 @@
                 required
               ></v-file-input>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="12">
               <v-text-field v-model="name" label="Name" required></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="barcode"
                 label="Barcode"
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="blg"
                 label="BLG"
@@ -38,7 +38,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="percent"
                 label="Percent"
@@ -49,7 +49,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="country"
                 label="Country"
@@ -57,7 +57,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="8">
+            <v-col cols="12" md="12">
               <v-textarea
                 v-model="description"
                 label="Description"
@@ -65,7 +65,7 @@
                 rows="2"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="12" class="text-left">
+            <v-col cols="12" md="12">
               <v-btn elevation="2" @click="store" outlined>Save</v-btn>
             </v-col>
           </v-row>
