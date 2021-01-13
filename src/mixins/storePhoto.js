@@ -5,9 +5,9 @@ export default {
       if (this.file.size > 1024 * 1024) {
         this.alert('Zdjęcie za duże! - mniejsze niż 1MB', 'error');
       } else if (this.file.type.toString().indexOf('image/') === 0) {
-        this.storePhoto(e, type);
+        this.storePhoto(e);
       } else {
-        this.alert('To nie jest zdjęcie!', 'error');
+        this.alert('Choose another photo!', 'error');
       }
       this.file = null;
     },
@@ -15,7 +15,7 @@ export default {
       var uploadTask = firebase.storage().ref(this.file.name).put(this.file);
       uploadTask.on("state_changed", null,
         err => {
-          this.alert('Błąd przesyłania!', 'error');
+          this.alert('Failure uploading, try again!', 'error');
         },
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {

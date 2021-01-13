@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="12" md="12"> </v-col>
         <v-col cols="12" md="4"
-          ><v-img max-height="auto" max-width="100%" :src="this.photo"></v-img>
+          ><v-img max-height="300px" max-width="auto" :src="this.photo"></v-img>
         </v-col>
         <v-col cols="12" md="8">
           <v-row class="form-box">
