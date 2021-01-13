@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      <v-card class="w-100 border-0">
-        <h3 class="p-2">Meeting name: {{ this.meet.name }}</h3>
+      <v-card class="w-100 border-0 px-5">
+        <h3 class="pt-2">Meeting name: {{ this.meet.name }}</h3>
         <v-tabs>
           <v-tab>Beers </v-tab>
           <v-tab-item>

@@ -9,10 +9,10 @@
       <b-navbar
         toggleable="lg"
         type="dark"
-        variant="info"
+        variant="dark"
         v-if="this.$store.state.logged !== null"
       >
-        <b-navbar-brand>Menu</b-navbar-brand>
+        <b-navbar-brand>Beer App</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -20,14 +20,14 @@
           <b-navbar-nav>
             <b-nav-item>
               <router-link class="nav-link" to="/meetings"
-                >Mettings
+                >Meetings
               </router-link>
             </b-nav-item>
             <b-nav-item @click="logoutUser" class="nav-link">Logout</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-      <div class="main-content">
+      <div class="main-content mt-5">
         <router-view></router-view>
       </div>
     </div>
@@ -60,7 +60,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-button {
+/* button {
   background-color: #2c3e50;
   border: 1px solid #2c3e50;
   padding: 15px;
@@ -71,12 +71,12 @@ button {
 button:hover {
   background-color: white;
   color: black;
-}
+} */
 html {
   overflow-x: hidden;
 }
 body {
-  background-color: white !important;
+  background-color: #e2e2e5 !important;
   font-family: "Montserrat", sans-serif !important;
   min-height: 100vh;
 }
@@ -135,6 +135,12 @@ a {
 }
 .alert-box .danger {
   background: #a94442 !important;
+}
+.form-box {
+  background-color: #fff;
+  border-radius: 5px;
+  color: #ecf0f1;
+  padding: 60px;
 }
 @media (max-width: 991px) {
   .chat-box {

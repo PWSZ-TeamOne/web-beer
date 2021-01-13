@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="d-flex align-items-center login-box">
-      <div class="m-auto">
-        <h2>{{ this.text }}</h2>
+    <div class="d-flex align-items-center main-box">
+      <div class="m-auto login-box">
+        <h2 id="title">{{ this.text }}</h2>
         <br />
         <section id="firebaseui-auth-container"></section>
         <br />
@@ -116,7 +116,15 @@ export default {
 </script>
 
 <style scoped>
-.login-box {
+.main-box {
+  background-color: #e2e2e5;
   height: 100vh;
+}
+.login-box {
+  background-color: #34495e;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 0px #666;
+  color: #ecf0f1;
+  padding: 60px;
 }
 </style>

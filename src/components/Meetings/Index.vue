@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-card class="w-100">
+      <v-card class="w-100 px-5">
         <v-card-title>
           <v-text-field
             v-model="search"
@@ -14,14 +14,14 @@
             elevation="2"
             class="mx-3"
             @click="$router.push('meetings/create')"
-            >Add metting</v-btn
+            >Add meeting</v-btn
           >
           <v-text-field
             v-model="meetingCode"
             label="Meeting code"
           ></v-text-field>
           <v-btn elevation="2" class="mx-3" @click="searchEventByTheCode"
-            >Join metting</v-btn
+            >Join meeting</v-btn
           >
         </v-card-title>
         <v-data-table :headers="headers" :items="meetings" :search="search">
